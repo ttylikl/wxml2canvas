@@ -196,6 +196,9 @@ const drawArcImage = (context, imgData) => {
   })
 }
 
+const wxp = require('./wrapper');
+console.log(wxp);
+
 const drawRectImage = (context, imgData) => {
   const { src, width, height, left, top } = imgData
 
@@ -213,6 +216,25 @@ const drawRectImage = (context, imgData) => {
       realWidth,
       realHeight,
     } = getCalculatedImagePosition(imgData, naturalWidth, naturalHeight)
+    console.log(src)
+    // wxp.getImageInfo({
+    //   src
+    // }).then( r=>{
+    //   console.log(src, r.path);
+    //   context.drawImage(
+    //     r.path, //src,
+    //     0,
+    //     0,
+    //     naturalWidth,
+    //     naturalHeight,
+    //     realLeft,
+    //     realTop,
+    //     realWidth,
+    //     realHeight,
+    //   )
+    //   context.restore()
+    // })
+    context.fillStyle = 'white'
     context.drawImage(
       src,
       0,
@@ -265,6 +287,7 @@ const drawRectBorder = (context, imgData) => {
 
 // image, enable border-radius: 50%, border, bgColor
 const drawImage = (context, imgData) => {
+  console.log(imgData);
   const { border, 'border-radius': borderRadius } = imgData
   let drawImagePromise
   if (hasBorderRadius(borderRadius)) {
@@ -501,9 +524,9 @@ const drawCanvas = (canvasId, wrapperData, innerData) => {
   return drawElementBaseOnIndex(context, storeObject).then(
     () =>
       new Promise((resolve, reject) => {
-        context.draw(true, () => {
+        context.draw(true, setTimeout( () => {
           resolve()
-        })
+        }), 100)
       }),
   )
 }
@@ -523,6 +546,7 @@ const wxSelectorQuery = element =>
             computedStyle: COMPUTED_STYLE,
           },
           res => {
+            console.log(res)
             resolve(res)
           },
         )

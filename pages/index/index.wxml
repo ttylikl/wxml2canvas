@@ -6,6 +6,7 @@
   <view class="image-wrapper draw">
     <image class="draw" src="../../assets/demo.jpg"/>
   </view>
+  <text class="draw">try my text</text>
   
   <button class="generate-btn" bindtap="drawCanvas">generate</button>
 </view>
