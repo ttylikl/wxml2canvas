@@ -21,6 +21,23 @@ const DEFAULT_RANK = {
   text: 2,
 }
 
+// convert wx.xxxx() to a promise function
+let wxp = {};
+let wf = f => {
+    return function(args){
+        console.log(args);
+        return new Promise((resolve, reject)=>{
+            f({
+                ...args,
+                success:(r)=>resolve(r), 
+                fail:(r)=>reject(r)
+            })
+        })
+    };
+}
+wxp.getImageInfo = wf(wx.getImageInfo);
+// end of convert
+
 const drawWrapper = (context, data) => {
   const { backgroundColor, width, height } = data
   context.setFillStyle(backgroundColor)
@@ -195,9 +212,6 @@ const drawArcImage = (context, imgData) => {
     context.restore()
   })
 }
-
-const wxp = require('./wrapper');
-console.log(wxp);
 
 const drawRectImage = (context, imgData) => {
   const { src, width, height, left, top } = imgData
